@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phase 01 スケジュール | abs IT事業部</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1B3A6B;--navy-light:#E6F1FB;--navy-mid:#185FA5;--green:#0F6E56;--green-light:#E1F5EE;--purple:#534AB7;--purple-light:#EEEDFE;--purple-dark:#3C3489;--amber:#854F0B;--amber-light:#FAEEDA;--gray:#64748B;--gray-light:#F5F7FA;--border:#E2E8F0;--text:#1A1A2E;--text-sub:#64748B;--white:#ffffff;--standup:#FFF8E6;--standup-text:#854F0B;}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Noto Sans JP',sans-serif;background:#F0F4F8;color:var(--text);font-size:16px;line-height:1.6;min-height:100vh;}
+.hero{background:var(--navy);padding:28px 20px 24px;position:relative;overflow:hidden;}
+.hero::after{content:'';position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.04);}
+.hero-eyebrow{font-size:13px;font-weight:500;letter-spacing:.1em;color:#B5D4F4;margin-bottom:6px;font-family:'DM Mono',monospace;}
+.hero-title{font-size:30px;font-weight:700;color:#fff;line-height:1.2;margin-bottom:6px;}
+.hero-sub{font-size:14px;color:#B5D4F4;}
+.hero-badges{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.hero-badge{font-size:13px;font-weight:500;padding:3px 10px;border-radius:99px;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.85);font-family:'DM Mono',monospace;}
+.tab-nav{background:var(--white);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;position:sticky;top:0;z-index:100;}
+.tab-nav::-webkit-scrollbar{display:none;}
+.tab-btn{flex-shrink:0;padding:12px 18px;font-size:15px;font-weight:500;color:var(--text-sub);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;font-family:'Noto Sans JP',sans-serif;transition:color .2s,border-color .2s;}
+.tab-btn.active{color:var(--navy);border-bottom-color:var(--navy);}
+.content{padding:16px;display:none;}
+.content.active{display:block;}
+.card{background:var(--white);border-radius:14px;border:1px solid var(--border);overflow:hidden;margin-bottom:12px;}
+.card-header{padding:12px 16px;}
+.card-header-label{font-size:13px;font-weight:500;font-family:'DM Mono',monospace;margin-bottom:3px;}
+.card-header-title{font-size:18px;font-weight:700;color:#fff;}
+.card-body{padding:14px 16px;}
+.week1 .card-header{background:var(--navy);}
+.week1 .card-header-label{color:#B5D4F4;}
+.week2 .card-header{background:var(--green);}
+.week2 .card-header-label{color:#9FE1CB;}
+.week3 .card-header{background:var(--purple);}
+.week3 .card-header-label{color:#CECBF6;}
+.day-row{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);align-items:flex-start;}
+.day-row:last-child{border-bottom:none;}
+.day-label{font-size:14px;font-weight:700;min-width:40px;flex-shrink:0;font-family:'DM Mono',monospace;padding-top:1px;}
+.week1 .day-label{color:var(--navy-mid);}
+.week2 .day-label{color:var(--green);}
+.week3 .day-label{color:var(--purple);}
+.day-text{font-size:15px;color:var(--text);}
+.output-box{border-radius:8px;padding:10px 12px;margin-top:10px;}
+.output-box-title{font-size:13px;font-weight:700;margin-bottom:4px;font-family:'DM Mono',monospace;}
+.output-item{font-size:14px;padding:1px 0;}
+.week1 .output-box{background:var(--navy-light);}
+.week1 .output-box-title{color:#0C447C;}
+.week1 .output-item{color:var(--navy-mid);}
+.week2 .output-box{background:var(--green-light);}
+.week2 .output-box-title{color:#085041;}
+.week2 .output-item{color:var(--green);}
+.week3 .output-box{background:var(--purple-light);}
+.week3 .output-box-title{color:var(--purple-dark);}
+.week3 .output-item{color:var(--purple);}
+.goal-card{background:var(--white);border-radius:14px;border:1px solid var(--border);padding:14px 16px;margin-bottom:12px;}
+.goal-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.goal-badge{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex-shrink:0;}
+.goal-badge.w1{background:var(--navy-light);color:#0C447C;}
+.goal-badge.w2{background:var(--green-light);color:#085041;}
+.goal-badge.w3{background:var(--purple-light);color:var(--purple-dark);}
+.goal-title{font-size:17px;font-weight:700;}
+.goal-item{display:flex;gap:8px;align-items:flex-start;font-size:15px;padding:6px 0;border-bottom:1px solid var(--border);}
+.goal-item:last-child{border-bottom:none;}
+.goal-check{color:var(--green);font-weight:700;flex-shrink:0;}
+.time-card{background:var(--white);border-radius:14px;border:1px solid var(--border);overflow:hidden;margin-bottom:12px;}
+.time-card-header{padding:10px 16px;font-size:15px;font-weight:700;}
+.time-card-header.w1{background:var(--navy-light);color:#0C447C;}
+.time-card-header.w2{background:var(--green-light);color:#085041;}
+.time-card-header.w3{background:var(--purple-light);color:var(--purple-dark);}
+.time-row{display:grid;grid-template-columns:82px 1fr;border-bottom:1px solid var(--border);}
+.time-row:last-of-type{border-bottom:none;}
+.time-label{padding:10px 10px;font-size:13px;font-weight:500;font-family:'DM Mono',monospace;color:var(--text-sub);border-right:1px solid var(--border);display:flex;align-items:center;}
+.time-content{padding:10px 14px;font-size:15px;display:flex;align-items:center;}
+.time-row.standup{background:var(--standup);}
+.time-row.standup .time-label{color:var(--standup-text);border-right-color:rgba(133,79,11,.2);}
+.time-row.standup .time-content{font-weight:700;color:var(--standup-text);}
+.time-row.rest .time-label,.time-row.rest .time-content{color:#94A3B8;}
+.time-note{margin:8px 16px 12px;border-radius:8px;padding:8px 10px;font-size:14px;}
+.time-note.w1{background:var(--amber-light);color:var(--amber);}
+.time-note.w2{background:var(--green-light);color:#085041;}
+.time-note.w3{background:var(--purple-light);color:var(--purple-dark);}
+.milestone-list{display:grid;gap:8px;}
+.milestone-item{background:var(--white);border-radius:12px;border:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:12px;}
+.milestone-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.milestone-day{font-size:14px;font-weight:700;font-family:'DM Mono',monospace;min-width:44px;flex-shrink:0;}
+.milestone-text{font-size:15px;}
+.section-label{font-size:13px;font-weight:700;letter-spacing:.1em;color:var(--text-sub);margin:20px 0 10px;padding-left:10px;border-left:3px solid var(--navy);text-transform:uppercase;border-radius:0;}
+.section-label:first-child{margin-top:0;}
+.page-footer{text-align:center;padding:20px 16px;font-size:13px;color:#94A3B8;font-family:'DM Mono',monospace;}
+
+.day-section{margin-bottom:16px;}
+.day-header{border-radius:10px 10px 0 0;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;}
+.day-header-date{font-size:18px;font-weight:700;color:#fff;font-family:'DM Mono',monospace;}
+.day-header-title{font-size:15px;color:rgba(255,255,255,.8);}
+.time-table{background:var(--white);border-radius:0 0 10px 10px;border:1px solid var(--border);border-top:none;overflow:hidden;}
+.tt-row{display:grid;grid-template-columns:82px 1fr;border-bottom:1px solid var(--border);}
+.tt-row:last-child{border-bottom:none;}
+.tt-time{padding:8px 10px;font-size:13px;font-weight:500;font-family:'DM Mono',monospace;color:var(--text-sub);border-right:1px solid var(--border);display:flex;align-items:center;line-height:1.3;}
+.tt-content{padding:8px 14px;font-size:15px;display:flex;align-items:center;line-height:1.4;}
+.tt-row.standup{background:var(--standup);}
+.tt-row.standup .tt-time{color:var(--standup-text);border-right-color:rgba(133,79,11,.2);}
+.tt-row.standup .tt-content{font-weight:700;color:var(--standup-text);}
+.tt-row.rest .tt-time,.tt-row.rest .tt-content{color:#94A3B8;}
+.tt-row.highlight{background:#F0FAF6;}
+.tt-row.highlight .tt-content{color:#085041;font-weight:500;}
+.week-label-d{font-size:13px;font-weight:700;letter-spacing:.1em;color:var(--text-sub);margin:20px 0 10px;padding-left:10px;border-left:3px solid var(--navy);text-transform:uppercase;border-radius:0;}
+.week-label-d:first-child{margin-top:0;}
+
+
+/* Back to Index Button */
+.back-btn{
+  position:fixed;
+  top:16px;
+  left:16px;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background:rgba(10,20,35,.42);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+  line-height:1;
+  text-decoration:none;
+  z-index:9999;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  box-shadow:0 8px 24px rgba(0,0,0,.18);
+  border:1px solid rgba(255,255,255,.22);
+  transition:transform .18s ease,background .18s ease,box-shadow .18s ease;
+}
+.back-btn:hover{background:rgba(10,20,35,.62);transform:translateX(-2px) scale(1.04);box-shadow:0 10px 28px rgba(0,0,0,.24);}
+.back-btn:active{transform:scale(.96);}
+.back-btn svg{width:22px;height:22px;display:block;}
+body{opacity:0;animation:pageFadeIn .28s ease forwards;}
+body.page-out{animation:pageFadeOut .16s ease forwards;}
+@keyframes pageFadeIn{to{opacity:1;}}
+@keyframes pageFadeOut{to{opacity:0;}}
+@media (max-width:480px){.back-btn{top:12px;left:12px;width:42px;height:42px;}}
+
+</style>
+</head>
+<body>
+<a href="index.html" class="back-btn" aria-label="メニューに戻る" title="メニューに戻る">
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M15 5L8 12L15 19" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</a>
+
+
+<div class="hero">
+  <div class="hero-eyebrow">ABS INTERNSHIP PROGRAM</div>
+  <div class="hero-title">Phase 01<br>スケジュール</div>
+  <div class="hero-sub">abs株式会社 IT事業部 ｜ ハノイ工科大学</div>
+  <div class="hero-badges">
+    <span class="hero-badge">7/21〜8/7</span><span class="hero-badge">3週間 / 15営業日</span>
+    <span class="hero-badge">5名</span>
+    <span class="hero-badge">Standup 9:30〜10:00</span>
+  </div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="showTab('schedule',this)">全体スケジュール</button>
+  <button class="tab-btn" onclick="showTab('goals',this)">週次着地点</button>
+  <button class="tab-btn" onclick="showTab('milestones',this)">マイルストーン</button>
+  <button class="tab-btn" onclick="showTab('daily-detail',this)">日次スケジュール</button>
+</div>
+
+<div id="tab-schedule" class="content active">
+  <p style="font-size:14px;color:var(--text-sub);margin-bottom:14px;">各Weekのテーマと主要アクティビティ</p>
+
+  <div class="card week1">
+    <div class="card-header">
+      <div class="card-header-label">WEEK 1 — 7/21〜7/24</div>
+      <div class="card-header-title">日本企業研修・業務理解</div>
+    </div>
+    <div class="card-body">
+      <div class="day-row"><span class="day-label">7/21火</span><span class="day-text">入社手続き（書類・NDA署名）・事前アンケート・労働条件/勤怠説明・機器貸与・ソフトウェアセットアップ・研修予定確認・初回スタンドアップ練習</span></div>
+      <div class="day-row"><span class="day-label">7/22水</span><span class="day-text">銀行口座開設・キックオフ・企業理念・事業概要 / 情報セキュリティ研修・コンプライアンス・個人情報保護法</span></div>
+      <div class="day-row"><span class="day-label">7/23木</span><span class="day-text">冠婚葬祭業界基礎・顧客心理・商習慣・業界用語習得</span></div>
+      <div class="day-row"><span class="day-label">7/24金</span><span class="day-text">IT事業部概要・DX/AI事例リサーチ ／ 午後：Week 2ブリーフィング・観察シート配布・質問リスト作成</span></div>
+      <div class="output-box">
+        <div class="output-box-title">Week 1 成果物</div>
+        <div class="output-item">・事業理解レポート（ドラフト）</div>
+        <div class="output-item">・AI活用テーマ企画書（仮説）</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card week2">
+    <div class="card-header">
+      <div class="card-header-label">WEEK 2 — 7/27〜7/31</div>
+      <div class="card-header-title">現場見学・ヒアリング</div>
+    </div>
+    <div class="card-body">
+      <div class="day-row"><span class="day-label">7/27月</span><span class="day-text">葬祭式場 終日見学（顧客対応・式典観察→バックオフィス業務→担当者ヒアリング Q1〜Q10）</span></div>
+      <div class="day-row"><span class="day-label">7/28火</span><span class="day-text">冠婚施設 終日見学（顧客対応・式典観察→バックオフィス業務→担当者ヒアリング Q1〜Q10）</span></div>
+      <div class="day-row"><span class="day-label">7/29水</span><span class="day-text">現場ヒアリングメモ整理（Googleフォーム登録）・5人で気づき共有・メンターFB</span></div>
+      <div class="day-row"><span class="day-label">7/30木</span><span class="day-text">AI事例リサーチ・AIテーマ仮説の初期検討（個人）</span></div>
+      <div class="day-row"><span class="day-label">7/31金</span><span class="day-text">観察シート（完成版）提出・AI活用テーマ企画書ドラフト発表・Week 3準備</span></div>
+      <div class="output-box">
+        <div class="output-box-title">Week 2 成果物</div>
+        <div class="output-item">・観察シート（完成版）提出</div>
+        <div class="output-item">・Googleフォームへのメモ登録（全件）</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card week3">
+    <div class="card-header">
+      <div class="card-header-label">WEEK 3 — 8/3〜8/7</div>
+      <div class="card-header-title">課題言語化・テーマ決定</div>
+    </div>
+    <div class="card-body">
+      <div class="day-row"><span class="day-label">8/3月</span><span class="day-text">業務分析レポート執筆（個人）・As-Isフロー図作成・課題仮説整理</span></div>
+      <div class="day-row"><span class="day-label">8/4火</span><span class="day-text">レポート仕上げ・AI活用テーマ仮説（個人案）・メンター中間FB</span></div>
+      <div class="day-row"><span class="day-label">8/5水</span><span class="day-text">5人持ち回り発表（各10分）・相互質問・課題マップ作成</span></div>
+      <div class="day-row"><span class="day-label">8/6木</span><span class="day-text">AIテーマ候補の絞り込み・実現可能性評価（グループ討議）</span></div>
+      <div class="day-row"><span class="day-label">8/7金</span><span class="day-text">AIテーマ決定・役割分担確定・Phase 02オリエンテーション</span></div>
+      
+      <div class="output-box">
+        <div class="output-box-title">Week 3 成果物</div>
+        <div class="output-item">・個人レポート（業務分析・課題抽出）</div>
+        <div class="output-item">・AI活用テーマ企画書（決定版）</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="tab-goals" class="content">
+  <p style="font-size:14px;color:var(--text-sub);margin-bottom:14px;">各週末時点で達成すべき状態</p>
+
+  <div class="goal-card">
+    <div class="goal-header">
+      <div class="goal-badge w1">W1</div>
+      <div>
+        <div style="font-size:13px;color:var(--navy-mid);font-weight:500;font-family:'DM Mono',monospace;">WEEK 1</div>
+        <div class="goal-title">「会社と仕事を知る」</div>
+      </div>
+    </div>
+    <div class="goal-item"><span class="goal-check">✓</span><span>報連相・スタンドアップの型が身についた</span></div>
+    <div class="goal-item"><span class="goal-check">✓</span><span>アルファクラブの事業と社会的役割を説明できる</span></div>
+    <div class="goal-item"><span class="goal-check">✓</span><span>セキュリティルール・NDA内容を把握した</span></div>
+    <div class="goal-item"><span class="goal-check">✓</span><span>Week 2の質問リストを日本語で準備できた</span></div>
+  </div>
+
+  <div class="goal-card">
+    <div class="goal-header">
+      <div class="goal-badge w2">W2</div>
+      <div>
+        <div style="font-size:13px;color:var(--green);font-weight:500;font-family:'DM Mono',monospace;">WEEK 2</div>
+        <div class="goal-title">「現場を見て、聞く」</div>
+      </div>
+    </div>
+    <div class="goal-item"><span class="goal-check">✓</span><span>葬祭・冠婚の業務フロー（As-Is）が描けた</span></div>
+    <div class="goal-item"><span class="goal-check">✓</span><span>現場スタッフへの直接ヒアリングができた</span></div>
+    <div class="goal-item"><span class="goal-check">✓</span><span>「非効率・繰り返し・手作業」の課題を発見した</span></div>
+    <div class="goal-item"><span class="goal-check">✓</span><span>観察シート・フォーム登録が全件完了した</span></div>
+  </div>
+
+  <div class="goal-card">
+    <div class="goal-header">
+      <div class="goal-badge w3">W3</div>
+      <div>
+        <div style="font-size:13px;color:var(--purple);font-weight:500;font-family:'DM Mono',monospace;">WEEK 3</div>
+        <div class="goal-title">「課題を言語化・テーマ決定」</div>
+      </div>
+    </div>
+    <div class="goal-item"><span class="goal-check">✓</span><span>業務分析レポート（個人）を完成・提出した</span></div>
+    <div class="goal-item"><span class="goal-check">✓</span><span>5人で発表・議論しAIテーマを1つに絞った</span></div>
+    <div class="goal-item"><span class="goal-check">✓</span><span>Phase 02の役割分担が決定した</span></div>
+    <div class="goal-item"><span class="goal-check">✓</span><span>AI活用テーマ企画書（仮説）を提出した</span></div>
+  </div>
+</div>
+</div>
+
+<div id="tab-milestones" class="content">
+  <p style="font-size:14px;color:var(--text-sub);margin-bottom:14px;">Phase 01の主要な節目</p>
+
+  <div class="milestone-list">
+    <div class="milestone-item"><div class="milestone-dot" style="background:#185FA5;"></div><div class="milestone-day" style="color:#185FA5;">7/21火</div><div class="milestone-text">プログラム開始・入社手続き・NDA署名完了</div></div>
+    <div class="milestone-item"><div class="milestone-dot" style="background:#854F0B;"></div><div class="milestone-day" style="color:#854F0B;">7/24金</div><div class="milestone-text">Week 2ブリーフィング・質問リスト完成（午後）</div></div>
+    <div class="milestone-item"><div class="milestone-dot" style="background:#0F6E56;"></div><div class="milestone-day" style="color:#0F6E56;">7/27月</div><div class="milestone-text">葬祭式場 終日見学・ヒアリング完了</div></div>
+    <div class="milestone-item"><div class="milestone-dot" style="background:#0F6E56;"></div><div class="milestone-day" style="color:#0F6E56;">8/3月</div><div class="milestone-text">観察シート提出・企画書ドラフト発表・Week 3準備</div></div>
+    <div class="milestone-item"><div class="milestone-dot" style="background:#534AB7;"></div><div class="milestone-day" style="color:#534AB7;">8/4火</div><div class="milestone-text">個人レポート提出・メンター中間FB</div></div>
+    <div class="milestone-item"><div class="milestone-dot" style="background:#534AB7;"></div><div class="milestone-day" style="color:#534AB7;">8/5水</div><div class="milestone-text">5人持ち回り発表・課題マップ作成</div></div>
+    <div class="milestone-item"><div class="milestone-dot" style="background:#A32D2D;"></div><div class="milestone-day" style="color:#A32D2D;">8/7金</div><div class="milestone-text">AIテーマ決定・役割分担確定・Phase 02へ</div></div>
+  </div>
+</div>
+
+<div id="tab-daily-detail" class="content">
+<p style="font-size:14px;color:var(--text-sub);margin-bottom:14px;">デイリースタンドアップは毎朝 <strong style="color:var(--standup-text);">9:30〜10:00</strong>（全日共通）</p>
+
+<div class="week-label-d">Week 1 — 7/21（火）〜 7/24（金）</div>
+
+<div class="day-section">
+  <div class="day-header" style="background:#1B3A6B;">
+    <span class="day-header-date">7/21（火）</span>
+    <span class="day-header-title">入社手続き・機器セットアップ</span>
+  </div>
+  <div class="time-table">
+    <div class="tt-row rest"><div class="tt-time">9:00〜9:30</div><div class="tt-content">集合・受付・会社案内</div></div>
+    <div class="tt-row rest"><div class="tt-time">9:30〜10:00</div><div class="tt-content">社内案内・メンター紹介</div></div>
+    <div class="tt-row"><div class="tt-time">10:00〜12:00</div><div class="tt-content">入社手続き（書類記入・NDA署名・事前アンケート）</div></div>
+    <div class="tt-row rest"><div class="tt-time">12:00〜13:00</div><div class="tt-content">昼休み</div></div>
+    <div class="tt-row"><div class="tt-time">13:00〜14:30</div><div class="tt-content">労働条件・勤怠説明</div></div>
+    <div class="tt-row"><div class="tt-time">14:30〜16:30</div><div class="tt-content">機器貸与・ソフトウェアセットアップ</div></div>
+    <div class="tt-row highlight"><div class="tt-time">16:30〜17:30</div><div class="tt-content">研修予定確認・初回スタンドアップ練習</div></div>
+    <div class="tt-row rest"><div class="tt-time">17:30〜18:00</div><div class="tt-content">退勤</div></div>
+  </div>
+</div>
+
+<div class="day-section">
+  <div class="day-header" style="background:#1B3A6B;">
+    <span class="day-header-date">7/22（水）</span>
+    <span class="day-header-title">銀行口座開設・キックオフ・セキュリティ研修</span>
+  </div>
+  <div class="time-table">
+    <div class="tt-row rest"><div class="tt-time">9:00〜9:30</div><div class="tt-content">出社・朝の準備</div></div>
+    <div class="tt-row standup"><div class="tt-time">9:30〜10:00</div><div class="tt-content">デイリースタンドアップ</div></div>
+    <div class="tt-row"><div class="tt-time">10:00〜11:30</div><div class="tt-content">銀行口座開設</div></div>
+    <div class="tt-row"><div class="tt-time">11:30〜12:00</div><div class="tt-content">キックオフ・企業理念</div></div>
+    <div class="tt-row rest"><div class="tt-time">12:00〜13:00</div><div class="tt-content">昼休み</div></div>
+    <div class="tt-row"><div class="tt-time">13:00〜15:00</div><div class="tt-content">事業概要説明（互助会・冠婚・葬祭・IT事業部）</div></div>
+    <div class="tt-row"><div class="tt-time">15:00〜17:00</div><div class="tt-content">情報セキュリティ研修・コンプライアンス・個人情報保護法</div></div>
+    <div class="tt-row"><div class="tt-time">17:00〜17:30</div><div class="tt-content">日報作成・翌日スタンドアップ準備</div></div>
+    <div class="tt-row rest"><div class="tt-time">17:30〜18:00</div><div class="tt-content">退勤</div></div>
+  </div>
+</div>
+
+<div class="day-section">
+  <div class="day-header" style="background:#1B3A6B;">
+    <span class="day-header-date">7/23（木）</span>
+    <span class="day-header-title">冠婚葬祭業界基礎・顧客心理・業界用語</span>
+  </div>
+  <div class="time-table">
+    <div class="tt-row rest"><div class="tt-time">9:00〜9:30</div><div class="tt-content">出社・朝の準備</div></div>
+    <div class="tt-row standup"><div class="tt-time">9:30〜10:00</div><div class="tt-content">デイリースタンドアップ</div></div>
+    <div class="tt-row"><div class="tt-time">10:00〜12:00</div><div class="tt-content">冠婚葬祭業界基礎・顧客心理・商習慣</div></div>
+    <div class="tt-row rest"><div class="tt-time">12:00〜13:00</div><div class="tt-content">昼休み</div></div>
+    <div class="tt-row"><div class="tt-time">13:00〜15:00</div><div class="tt-content">業界用語習得・事業理解ワーク</div></div>
+    <div class="tt-row"><div class="tt-time">15:00〜17:00</div><div class="tt-content">AI活用事例リサーチ（サービス業・冠婚葬祭業）</div></div>
+    <div class="tt-row"><div class="tt-time">17:00〜17:30</div><div class="tt-content">日報作成・翌日スタンドアップ準備</div></div>
+    <div class="tt-row rest"><div class="tt-time">17:30〜18:00</div><div class="tt-content">退勤</div></div>
+  </div>
+</div>
+
+<div class="day-section">
+  <div class="day-header" style="background:#1B3A6B;">
+    <span class="day-header-date">7/24（金）</span>
+    <span class="day-header-title">IT事業部概要・Week 2ブリーフィング・質問リスト作成</span>
+  </div>
+  <div class="time-table">
+    <div class="tt-row rest"><div class="tt-time">9:00〜9:30</div><div class="tt-content">出社・朝の準備</div></div>
+    <div class="tt-row standup"><div class="tt-time">9:30〜10:00</div><div class="tt-content">デイリースタンドアップ</div></div>
+    <div class="tt-row"><div class="tt-time">10:00〜12:00</div><div class="tt-content">IT事業部概要・既存システム構成・DX/AI事例リサーチ</div></div>
+    <div class="tt-row rest"><div class="tt-time">12:00〜13:00</div><div class="tt-content">昼休み</div></div>
+    <div class="tt-row"><div class="tt-time">13:00〜14:30</div><div class="tt-content">Week 1振り返り・事業理解レポートドラフト</div></div>
+    <div class="tt-row highlight"><div class="tt-time">14:30〜16:00</div><div class="tt-content">Week 2ブリーフィング・観察シート配布・使い方説明</div></div>
+    <div class="tt-row highlight"><div class="tt-time">16:00〜17:00</div><div class="tt-content">質問リスト作成（個人ワーク・Q1〜Q10）</div></div>
+    <div class="tt-row"><div class="tt-time">17:00〜17:30</div><div class="tt-content">日報作成・週末準備</div></div>
+    <div class="tt-row rest"><div class="tt-time">17:30〜18:00</div><div class="tt-content">退勤</div></div>
+  </div>
+</div>
+
+<div class="week-label-d">Week 2 — 7/27（月）〜 7/31（金）</div>
+
+<div class="day-section">
+  <div class="day-header" style="background:#0F6E56;">
+    <span class="day-header-date">7/27（月）</span>
+    <span class="day-header-title">葬祭式場 終日見学・ヒアリング</span>
+  </div>
+  <div class="time-table">
+    <div class="tt-row rest"><div class="tt-time">9:00〜9:30</div><div class="tt-content">出社・観察シート最終確認・持ち物チェック</div></div>
+    <div class="tt-row standup"><div class="tt-time">9:30〜10:00</div><div class="tt-content">デイリースタンドアップ</div></div>
+    <div class="tt-row highlight"><div class="tt-time">10:00〜10:20</div><div class="tt-content">見学前ブリーフィング・目的・マナー確認</div></div>
+    <div class="tt-row highlight"><div class="tt-time">10:30〜12:00</div><div class="tt-content">葬祭式場見学（顧客対応・式典の流れを観察・観察シート記入）</div></div>
+    <div class="tt-row rest"><div class="tt-time">12:00〜13:00</div><div class="tt-content">昼休み</div></div>
+    <div class="tt-row highlight"><div class="tt-time">13:00〜15:30</div><div class="tt-content">バックオフィス業務観察・担当者ヒアリング（Q1〜Q10）</div></div>
+    <div class="tt-row"><div class="tt-time">15:30〜17:00</div><div class="tt-content">観察シート記入・ヒアリングメモ整理</div></div>
+    <div class="tt-row"><div class="tt-time">17:00〜17:30</div><div class="tt-content">日報作成・翌日スタンドアップ準備</div></div>
+    <div class="tt-row rest"><div class="tt-time">17:30〜18:00</div><div class="tt-content">退勤</div></div>
+  </div>
+</div>
+
+<div class="day-section">
+  <div class="day-header" style="background:#0F6E56;">
+    <span class="day-header-date">7/28（火）</span>
+    <span class="day-header-title">冠婚施設 終日見学・ヒアリング</span>
+  </div>
+  <div class="time-table">
+    <div class="tt-row rest"><div class="tt-time">9:00〜9:30</div><div class="tt-content">出社・観察シート最終確認・持ち物チェック</div></div>
+    <div class="tt-row standup"><div class="tt-time">9:30〜10:00</div><div class="tt-content">デイリースタンドアップ</div></div>
+    <div class="tt-row highlight"><div class="tt-time">10:00〜10:20</div><div class="tt-content">見学前ブリーフィング・目的・マナー確認</div></div>
+    <div class="tt-row highlight"><div class="tt-time">10:30〜12:00</div><div class="tt-content">冠婚施設見学（顧客対応・式典の流れを観察・観察シート記入）</div></div>
+    <div class="tt-row rest"><div class="tt-time">12:00〜13:00</div><div class="tt-content">昼休み</div></div>
+    <div class="tt-row highlight"><div class="tt-time">13:00〜15:30</div><div class="tt-content">バックオフィス業務観察・担当者ヒアリング（Q1〜Q10）</div></div>
+    <div class="tt-row"><div class="tt-time">15:30〜17:00</div><div class="tt-content">観察シート記入・ヒアリングメモ整理</div></div>
+    <div class="tt-row"><div class="tt-time">17:00〜17:30</div><div class="tt-content">日報作成・翌日スタンドアップ準備</div></div>
+    <div class="tt-row rest"><div class="tt-time">17:30〜18:00</div><div class="tt-content">退勤</div></div>
+  </div>
+</div>
+
+<div class="day-section">
+  <div class="day-header" style="background:#0F6E56;">
+    <span class="day-header-date">7/29（水）</span>
+    <span class="day-header-title">現場ヒアリングメモ整理・Googleフォーム登録・気づき共有</span>
+  </div>
+  <div class="time-table">
+    <div class="tt-row rest"><div class="tt-time">9:00〜9:30</div><div class="tt-content">出社・朝の準備</div></div>
+    <div class="tt-row standup"><div class="tt-time">9:30〜10:00</div><div class="tt-content">デイリースタンドアップ</div></div>
+    <div class="tt-row"><div class="tt-time">10:00〜12:00</div><div class="tt-content">現場ヒアリングメモ整理・Googleフォーム登録（個人）</div></div>
+    <div class="tt-row rest"><div class="tt-time">12:00〜13:00</div><div class="tt-content">昼休み</div></div>
+    <div class="tt-row highlight"><div class="tt-time">13:00〜15:00</div><div class="tt-content">5人で気づき共有（各自10分・気になった場面・課題仮説）</div></div>
+    <div class="tt-row highlight"><div class="tt-time">15:00〜17:00</div><div class="tt-content">メンターフィードバック・追加ヒアリング事項の検討</div></div>
+    <div class="tt-row"><div class="tt-time">17:00〜17:30</div><div class="tt-content">日報作成・翌日スタンドアップ準備</div></div>
+    <div class="tt-row rest"><div class="tt-time">17:30〜18:00</div><div class="tt-content">退勤</div></div>
+  </div>
+</div>
+
+<div class="day-section">
+  <div class="day-header" style="background:#0F6E56;">
+    <span class="day-header-date">7/30（木）</span>
+    <span class="day-header-title">AI事例リサーチ・AIテーマ仮説の初期検討</span>
+  </div>
+  <div class="time-table">
+    <div class="tt-row rest"><div class="tt-time">9:00〜9:30</div><div class="tt-content">出社・朝の準備</div></div>
+    <div class="tt-row standup"><div class="tt-time">9:30〜10:00</div><div class="tt-content">デイリースタンドアップ</div></div>
+    <div class="tt-row"><div class="tt-time">10:00〜12:00</div><div class="tt-content">AI事例リサーチ（サービス業・RAG・チャットボット・OCR等）</div></div>
+    <div class="tt-row rest"><div class="tt-time">12:00〜13:00</div><div class="tt-content">昼休み</div></div>
+    <div class="tt-row"><div class="tt-time">13:00〜16:00</div><div class="tt-content">AIテーマ仮説の初期検討（現場課題×AI技術の組み合わせを考える）</div></div>
+    <div class="tt-row"><div class="tt-time">16:00〜17:00</div><div class="tt-content">仮説メモ作成・企画書ドラフト準備</div></div>
+    <div class="tt-row"><div class="tt-time">17:00〜17:30</div><div class="tt-content">日報作成・翌日スタンドアップ準備</div></div>
+    <div class="tt-row rest"><div class="tt-time">17:30〜18:00</div><div class="tt-content">退勤</div></div>
+  </div>
+</div>
+
+<div class="day-section">
+  <div class="day-header" style="background:#0F6E56;">
+    <span class="day-header-date">7/31（金）</span>
+    <span class="day-header-title">観察シート提出・企画書ドラフト発表・Week 3準備</span>
+  </div>
+  <div class="time-table">
+    <div class="tt-row rest"><div class="tt-time">9:00〜9:30</div><div class="tt-content">出社・朝の準備</div></div>
+    <div class="tt-row standup"><div class="tt-time">9:30〜10:00</div><div class="tt-content">デイリースタンドアップ</div></div>
+    <div class="tt-row highlight"><div class="tt-time">10:00〜11:00</div><div class="tt-content">観察シート（完成版）最終確認・提出</div></div>
+    <div class="tt-row"><div class="tt-time">11:00〜12:00</div><div class="tt-content">AI活用テーマ企画書ドラフト仕上げ</div></div>
+    <div class="tt-row rest"><div class="tt-time">12:00〜13:00</div><div class="tt-content">昼休み</div></div>
+    <div class="tt-row highlight"><div class="tt-time">13:00〜15:00</div><div class="tt-content">AI活用テーマ企画書ドラフト発表（5人・各20分）</div></div>
+    <div class="tt-row"><div class="tt-time">15:00〜16:30</div><div class="tt-content">Week 3準備・個人レポートの構成検討</div></div>
+    <div class="tt-row"><div class="tt-time">16:30〜17:00</div><div class="tt-content">メンターFB・週末準備</div></div>
+    <div class="tt-row"><div class="tt-time">17:00〜17:30</div><div class="tt-content">日報作成</div></div>
+    <div class="tt-row rest"><div class="tt-time">17:30〜18:00</div><div class="tt-content">退勤</div></div>
+  </div>
+</div>
+
+<div class="week-label-d">Week 3 — 8/3（月）〜 8/7（金）</div>
+
+<div class="day-section">
+  <div class="day-header" style="background:#534AB7;">
+    <span class="day-header-date">8/3（月）</span>
+    <span class="day-header-title">業務分析レポート執筆・As-Isフロー図作成</span>
+  </div>
+  <div class="time-table">
+    <div class="tt-row rest"><div class="tt-time">9:00〜9:30</div><div class="tt-content">出社・作業準備</div></div>
+    <div class="tt-row standup"><div class="tt-time">9:30〜10:00</div><div class="tt-content">デイリースタンドアップ</div></div>
+    <div class="tt-row"><div class="tt-time">10:00〜12:00</div><div class="tt-content">業務分析レポート執筆（個人）</div></div>
+    <div class="tt-row rest"><div class="tt-time">12:00〜13:00</div><div class="tt-content">昼休み</div></div>
+    <div class="tt-row"><div class="tt-time">13:00〜15:30</div><div class="tt-content">As-Isフロー図作成（葬祭・冠婚それぞれ）</div></div>
+    <div class="tt-row"><div class="tt-time">15:30〜17:00</div><div class="tt-content">課題仮説整理・レポート構成の見直し</div></div>
+    <div class="tt-row"><div class="tt-time">17:00〜17:30</div><div class="tt-content">日報作成・翌日スタンドアップ準備</div></div>
+    <div class="tt-row rest"><div class="tt-time">17:30〜18:00</div><div class="tt-content">退勤</div></div>
+  </div>
+</div>
+
+<div class="day-section">
+  <div class="day-header" style="background:#534AB7;">
+    <span class="day-header-date">8/4（火）</span>
+    <span class="day-header-title">レポート仕上げ・AI仮説作成・メンター中間FB</span>
+  </div>
+  <div class="time-table">
+    <div class="tt-row rest"><div class="tt-time">9:00〜9:30</div><div class="tt-content">出社・作業準備</div></div>
+    <div class="tt-row standup"><div class="tt-time">9:30〜10:00</div><div class="tt-content">デイリースタンドアップ</div></div>
+    <div class="tt-row"><div class="tt-time">10:00〜12:00</div><div class="tt-content">業務分析レポート仕上げ・提出準備</div></div>
+    <div class="tt-row rest"><div class="tt-time">12:00〜13:00</div><div class="tt-content">昼休み</div></div>
+    <div class="tt-row"><div class="tt-time">13:00〜15:00</div><div class="tt-content">AI活用テーマ仮説（個人案）作成・企画書ブラッシュアップ</div></div>
+    <div class="tt-row highlight"><div class="tt-time">15:00〜17:00</div><div class="tt-content">メンター中間フィードバック（個別・各20分）</div></div>
+    <div class="tt-row"><div class="tt-time">17:00〜17:30</div><div class="tt-content">日報作成・翌日スタンドアップ準備</div></div>
+    <div class="tt-row rest"><div class="tt-time">17:30〜18:00</div><div class="tt-content">退勤</div></div>
+  </div>
+</div>
+
+<div class="day-section">
+  <div class="day-header" style="background:#534AB7;">
+    <span class="day-header-date">8/5（水）</span>
+    <span class="day-header-title">5人持ち回り発表・課題マップ作成</span>
+  </div>
+  <div class="time-table">
+    <div class="tt-row rest"><div class="tt-time">9:00〜9:30</div><div class="tt-content">出社・発表準備・最終確認</div></div>
+    <div class="tt-row standup"><div class="tt-time">9:30〜10:00</div><div class="tt-content">デイリースタンドアップ</div></div>
+    <div class="tt-row"><div class="tt-time">10:00〜10:30</div><div class="tt-content">発表準備・スライド最終確認</div></div>
+    <div class="tt-row highlight"><div class="tt-time">10:30〜12:00</div><div class="tt-content">5人持ち回り発表①〜③（各10分＋質疑5分）</div></div>
+    <div class="tt-row rest"><div class="tt-time">12:00〜13:00</div><div class="tt-content">昼休み</div></div>
+    <div class="tt-row highlight"><div class="tt-time">13:00〜14:30</div><div class="tt-content">5人持ち回り発表④〜⑤（各10分＋質疑5分）</div></div>
+    <div class="tt-row"><div class="tt-time">14:30〜17:00</div><div class="tt-content">課題マップ作成（5人の発表をもとに共通課題を可視化）</div></div>
+    <div class="tt-row"><div class="tt-time">17:00〜17:30</div><div class="tt-content">日報作成・翌日スタンドアップ準備</div></div>
+    <div class="tt-row rest"><div class="tt-time">17:30〜18:00</div><div class="tt-content">退勤</div></div>
+  </div>
+</div>
+
+<div class="day-section">
+  <div class="day-header" style="background:#534AB7;">
+    <span class="day-header-date">8/6（木）</span>
+    <span class="day-header-title">AIテーマ候補の絞込み・グループ討議</span>
+  </div>
+  <div class="time-table">
+    <div class="tt-row rest"><div class="tt-time">9:00〜9:30</div><div class="tt-content">出社・作業準備</div></div>
+    <div class="tt-row standup"><div class="tt-time">9:30〜10:00</div><div class="tt-content">デイリースタンドアップ</div></div>
+    <div class="tt-row"><div class="tt-time">10:00〜12:00</div><div class="tt-content">AIテーマ候補の個人整理・優先順位付け</div></div>
+    <div class="tt-row rest"><div class="tt-time">12:00〜13:00</div><div class="tt-content">昼休み</div></div>
+    <div class="tt-row highlight"><div class="tt-time">13:00〜16:00</div><div class="tt-content">AIテーマ絞込みグループ討議（実現可能性・効果・業務インパクトで評価）</div></div>
+    <div class="tt-row"><div class="tt-time">16:00〜17:00</div><div class="tt-content">討議まとめ・翌日決定に向けた準備</div></div>
+    <div class="tt-row"><div class="tt-time">17:00〜17:30</div><div class="tt-content">日報作成・翌日スタンドアップ準備</div></div>
+    <div class="tt-row rest"><div class="tt-time">17:30〜18:00</div><div class="tt-content">退勤</div></div>
+  </div>
+</div>
+
+<div class="day-section">
+  <div class="day-header" style="background:#534AB7;">
+    <span class="day-header-date">8/7（金）</span>
+    <span class="day-header-title">AIテーマ決定・役割分担確定・Phase 02オリエンテーション</span>
+  </div>
+  <div class="time-table">
+    <div class="tt-row rest"><div class="tt-time">9:00〜9:30</div><div class="tt-content">出社・準備</div></div>
+    <div class="tt-row standup"><div class="tt-time">9:30〜10:00</div><div class="tt-content">デイリースタンドアップ</div></div>
+    <div class="tt-row highlight"><div class="tt-time">10:00〜11:00</div><div class="tt-content">AIテーマ最終決定（5人全員合意）</div></div>
+    <div class="tt-row highlight"><div class="tt-time">11:00〜12:00</div><div class="tt-content">役割分担確定（会社提案→本人ブラッシュアップ）</div></div>
+    <div class="tt-row rest"><div class="tt-time">12:00〜13:00</div><div class="tt-content">昼休み</div></div>
+    <div class="tt-row highlight"><div class="tt-time">13:00〜15:00</div><div class="tt-content">Phase 02オリエンテーション（スケジュール・進め方・成果物説明）</div></div>
+    <div class="tt-row"><div class="tt-time">15:00〜16:30</div><div class="tt-content">Phase 01振り返り・成果物最終確認・AI活用テーマ企画書提出</div></div>
+    <div class="tt-row"><div class="tt-time">16:30〜17:00</div><div class="tt-content">メンターフィードバック・Phase 01修了</div></div>
+    <div class="tt-row"><div class="tt-time">17:00〜17:30</div><div class="tt-content">日報作成</div></div>
+    <div class="tt-row rest"><div class="tt-time">17:30〜18:00</div><div class="tt-content">退勤</div></div>
+  </div>
+</div>
+
+</div>
+
+<div class="page-footer">Phase 01 ｜ abs株式会社 IT事業部<br>アルファクラブ武蔵野株式会社</div>
+
+<script>
+function showTab(id,btn){
+  document.querySelectorAll('.content').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+}
+</script>
+
+<script>
+(function(){
+  const back=document.querySelector('.back-btn');
+  if(back){
+    back.addEventListener('click',function(e){
+      if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey) return;
+      e.preventDefault();
+      document.body.classList.add('page-out');
+      setTimeout(()=>{ location.href=back.getAttribute('href'); },150);
+    });
+  }
+  let startX=0,startY=0,startTime=0;
+  window.addEventListener('touchstart',function(e){
+    if(!e.touches||e.touches.length!==1) return;
+    startX=e.touches[0].clientX;
+    startY=e.touches[0].clientY;
+    startTime=Date.now();
+  },{passive:true});
+  window.addEventListener('touchend',function(e){
+    if(!startTime||!e.changedTouches||e.changedTouches.length!==1) return;
+    const dx=e.changedTouches[0].clientX-startX;
+    const dy=Math.abs(e.changedTouches[0].clientY-startY);
+    const elapsed=Date.now()-startTime;
+    if(startX<40 && dx>90 && dy<70 && elapsed<700){
+      document.body.classList.add('page-out');
+      setTimeout(()=>{ location.href='index.html'; },150);
+    }
+  },{passive:true});
+})();
+</script>
+</body>
+</html>
